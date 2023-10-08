@@ -5,10 +5,13 @@
 #define GLFW_DLL
 #include <glfw/glfw3.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <lua/lua.h>
 #include <lua/lauxlib.h>
 #include <lua/lualib.h>
 
+#define IMAGE_WIDTH 800
+#define IMAGE_HEIGHT 600
 
 double red = 0.1;
 lua_State *L;
@@ -59,8 +62,18 @@ int main()
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-    GLFWwindow *window = glfwCreateWindow(1280, 720, "GLFW OpenGL", NULL, NULL);
+    GLFWwindow *window = glfwCreateWindow(400, 400, "GLFW OpenGL", NULL, NULL);
     glfwMakeContextCurrent(window);
+    unsigned int data[200][200][3];
+    for( size_t y = 0; y < 200; y++ )
+    {
+        for( size_t x = 0; x < 200; x++ )
+        {
+            data[y][x][0] = 256;
+            data[y][x][1] = 100;
+            data[y][x][2] = 100; 
+        }
+    }
     gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 
     glfwSetKeyCallback(window, quit);
@@ -69,6 +82,7 @@ int main()
 
         glClearColor(red, 0.4, 0.9, 1.0);
         glClear(GL_COLOR_BUFFER_BIT);
+        glDrawPixels(200, 200, GL_RGB, GL_UNSIGNED_INT, data);
         glfwSwapBuffers(window);
     }
 
