@@ -1,12 +1,19 @@
 #include <stdio.h>
 
-void foo(char* bar){
-    printf(bar);
+int calculateBar(int foo){
+    return foo + 1;
+}
+
+int calculateBas(int foo){
+    return foo + 2;
 }
 
 int main(){
-    printf("function pointers");
-    void (*fun)() = foo;
-    fun("bar");
+    int (*fun)(int foo) = calculateBar;
+    printf("%i \n", fun(2));
+
+    fun = calculateBas;
+    printf("%i \n", fun(2));
+
     return 0;
 }
