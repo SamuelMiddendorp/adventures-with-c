@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "eventDispatcher.h"
 
 struct Foo{
     int (*calcBar)(int);
@@ -11,6 +12,10 @@ int calculateBar(int foo){
 
 int calculateBas(int foo){
     return foo + 2;
+}
+
+void sample(int bar){
+    printf("got event! %i", bar);
 }
 
 int main(){
@@ -28,6 +33,7 @@ int main(){
     printf("%i \n", f.calcBar(2));
     printf("%i \n", f.calcBas(2));
 
-
+    register_event(sample, 20);
+    fire_events();
     return 0;
 }
