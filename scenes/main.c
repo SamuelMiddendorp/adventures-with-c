@@ -29,6 +29,10 @@ void pushScene(SceneManager* sceneManager, Scene* scene){
 	sceneManager->stateStack[++sceneManager->current] = scene;	
 }
 
+void popScene(SceneManager* sceneManager){
+	sceneManager->stateStack[sceneManager->current--] = NULL;
+}
+
 void runScene(SceneManager* sceneManager){
 	sceneManager->stateStack[sceneManager->current]->run();
 }
@@ -50,6 +54,9 @@ int main(){
 	runScene(&sceneManager);
 
 	pushScene(&sceneManager, &s1);
+	runScene(&sceneManager);
+
+	popScene(&sceneManager);
 	runScene(&sceneManager);
 
 	return 0;
